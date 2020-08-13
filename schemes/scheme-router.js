@@ -1,9 +1,10 @@
 const express = require('express');
 
-const Schemes = require('./scheme-model.js');
+const Schemes = require('./scheme-model');
 
 const router = express.Router();
 
+//find()
 router.get('/', (req, res) => {
   Schemes.find()
   .then(schemes => {
@@ -14,6 +15,7 @@ router.get('/', (req, res) => {
   });
 });
 
+//findById(id)
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
@@ -30,6 +32,7 @@ router.get('/:id', (req, res) => {
   });
 });
 
+//findSteps(id)
 router.get('/:id/steps', (req, res) => {
   const { id } = req.params;
 
@@ -46,6 +49,7 @@ router.get('/:id/steps', (req, res) => {
   });
 });
 
+//add(scheme)
 router.post('/', (req, res) => {
   const schemeData = req.body;
 
@@ -58,6 +62,7 @@ router.post('/', (req, res) => {
   });
 });
 
+//addStep(step, scheme_id) OPTIONAL for stretch
 router.post('/:id/steps', (req, res) => {
   const stepData = req.body;
   const { id } = req.params; 
@@ -78,6 +83,7 @@ router.post('/:id/steps', (req, res) => {
   });
 });
 
+//update(changes, id)
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;
@@ -87,8 +93,8 @@ router.put('/:id', (req, res) => {
     if (scheme) {
       Schemes.update(changes, id)
       .then(updatedScheme => {
-        res.json(updatedScheme);
-      });
+        res.json({updatedScheme});
+      })
     } else {
       res.status(404).json({ message: 'Could not find scheme with given id' });
     }
@@ -98,6 +104,7 @@ router.put('/:id', (req, res) => {
   });
 });
 
+//remove(id)
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
