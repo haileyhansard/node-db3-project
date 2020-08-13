@@ -19,6 +19,12 @@ function findById(id) {
         .first();
 }
 
+//this is like the posts of a user .get example from guided project on server.js file
+// the scheme_id is the foreign key that references scheme.id - where
+// the scheme_name is the value that targets the scheme's id - select
+// schemes, schemes.id = steps.scheme_id - join
+// the other required values for a step are step_number, instructions - select
+// order by steps.step_number, it will automatically be in ascending order
 function findSteps(id) {
     return db('steps')
         .where({ scheme_id: id})
